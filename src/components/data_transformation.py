@@ -65,8 +65,8 @@ class DataTransformation:
             preprocessing_obj=self.getDataTransformerObject()
             input_feature_train_array=preprocessing_obj.fit_transform(input_feature_train_df)
             input_feature_test_array=preprocessing_obj.transform(input_feature_test_df)
-            train_arr=np.c_[input_feature_train_array,np.array(input_feature_train_df)]
-            test_arr=np.c_[input_feature_test_array,np.array(input_feature_test_df)]
+            train_arr=np.c_[input_feature_train_array, np.array(target_feature_train_df).reshape(-1,1)]
+            test_arr=np.c_[input_feature_test_array, np.array(target_feature_test_df).reshape(-1,1)]
             logging.info("save Object")
             save_object(file_path=self.data_transformation_config.preprocessor_obj_file_path,
                         obj=preprocessing_obj)
@@ -74,4 +74,4 @@ class DataTransformation:
                 test_arr,
                 self.data_transformation_config.preprocessor_obj_file_path)
         except Exception as e:
-            raise CustomException
+            raise CustomException(e,sys)
